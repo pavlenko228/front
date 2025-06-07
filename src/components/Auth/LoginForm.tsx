@@ -34,3 +34,10 @@ export default function LoginForm() {
         margin="normal"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+      />
+      <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+        Login
+      </Button>
+    </Box>
+  );
+}

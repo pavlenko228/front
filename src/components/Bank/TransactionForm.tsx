@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TextField, Button, Box, Alert, MenuItem } from '@mui/material';
-import { bankService } from '../../../api/bankService';
+import { bankService } from '../../api/bankService';
 
 interface TransactionFormProps {
   accounts: Array<{ id: string; currency: string }>;

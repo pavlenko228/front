@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Accounts from './pages/Accounts';
 import Transactions from './pages/Transactions';
-import Navbar from './components/Layout/NavBar';
+import NavBar from './components/Layout/NavBar';
 
 const theme = createTheme();
 
@@ -16,7 +16,7 @@ function App() {
       <CssBaseline />
       <AuthProvider>
         <BrowserRouter>
-          <Navbar />
+          <NavBar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
