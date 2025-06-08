@@ -19,12 +19,17 @@ export default function TransactionForm({ accounts, onSuccess }: TransactionForm
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await bankService.createTransaction(formData);
+      // Исправленный вызов transfer с правильными параметрами
+      await bankService.transfer(
+        Number(formData.fromAccount), // sourceAccountNumber (number)
+        Number(formData.amount),     // amount (number)
+        Number(formData.toAccount)   // targetAccountNumber (number)
+      );
       setSuccess(true);
       setError('');
       onSuccess();
     } catch (err) {
-      setError('Transaction failed');
+      setError(err instanceof Error ? err.message : 'Transaction failed');
       setSuccess(false);
     }
   };
@@ -71,6 +76,7 @@ export default function TransactionForm({ accounts, onSuccess }: TransactionForm
         margin="normal"
         value={formData.amount}
         onChange={(e) => setFormData({...formData, amount: Number(e.target.value)})}
+        inputProps={{ min: 0, step: 0.01 }}
       />
 
       <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>

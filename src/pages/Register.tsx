@@ -6,7 +6,8 @@ export default function Register() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    password: ''
+    password: '',
+    phone: '',
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -51,6 +52,14 @@ export default function Register() {
             margin="normal"
             value={formData.password}
             onChange={(e) => setFormData({...formData, password: e.target.value})}
+          />
+          <TextField
+            label="Phone"
+            type="phone"
+            fullWidth
+            margin="normal"
+            value={formData.phone}
+            onChange={(e) => setFormData({...formData, phone: e.target.value})}
           />
           <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
             Register

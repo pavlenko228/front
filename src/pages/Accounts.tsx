@@ -2,37 +2,42 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { bankService } from '../api/bankService';
 import { Box, Typography, CircularProgress, Alert } from '@mui/material';
-import AccountList from '../components/Bank/AccountList';
+import AccountList from '../components/bank/AccountList';
 
-// Определяем тип прямо в файле
-interface Account {
+
+// Интерфейс для данных из API
+interface ApiAccount {
+  id: number;
+  number: number;
+  userId: number;
+  accountType: string;
+  balance: number;
+  currency?: string;
+}
+
+interface IAccount {
   id: string;
   balance: number;
   currency: string;
-  name: string;
+  name?: string;
 }
 
 export default function Accounts() {
-  const { token } = useAuth();
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const { token, userId } = useAuth();
+  const [accounts, setAccounts] = useState<ApiAccount[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!token) {
+    if (!token || !userId) {
       setLoading(false);
       return;
     }
 
     const fetchAccounts = async () => {
       try {
-        const response = await bankService.getAccounts();
-        setAccounts(response.data.map((acc: any) => ({
-          id: acc.id,
-          balance: acc.balance,
-          currency: acc.currency || 'USD', // Значение по умолчанию
-          name: acc.name || `Account ${acc.id.slice(0, 4)}`
-        })));
+        const response = await bankService.getAccounts(userId);
+        setAccounts(response.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch accounts');
       } finally {
@@ -41,7 +46,17 @@ export default function Accounts() {
     };
 
     fetchAccounts();
-  }, [token]);
+  }, [token, userId]);
+
+  // Преобразование данных для AccountList
+  const formatAccounts = (apiAccounts: ApiAccount[]): IAccount[] => {
+    return apiAccounts.map(account => ({
+      id: account.id.toString(),
+      balance: account.balance,
+      currency: account.currency || 'USD',
+      name: `Account ${account.number.toString().slice(-4)}` // Генерируем имя из номера
+    }));
+  };
 
   if (!token) {
     return (
@@ -72,7 +87,7 @@ export default function Accounts() {
           You don't have any accounts yet
         </Alert>
       ) : (
-        <AccountList accounts={accounts} />
+        <AccountList accounts={formatAccounts(accounts)} />
       )}
     </Box>
   );

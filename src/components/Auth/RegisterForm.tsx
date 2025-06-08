@@ -4,6 +4,7 @@ interface IFormData {
   name: string;
   email: string;
   password: string;
+  phone: string;
   confirmPassword?: string;
 }
 
@@ -12,6 +13,7 @@ const RegisterForm: React.FC = () => {
     name: '',
     email: '',
     password: '',
+    phone: '',
     confirmPassword: '',
   });
   const [errors, setErrors] = useState<Partial<IFormData>>({});

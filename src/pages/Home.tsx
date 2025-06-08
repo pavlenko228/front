@@ -1,6 +1,6 @@
 import React from 'react';
-import SideBar from '../components/Layout/SideBar';
-import AccountList from '../components/Bank/AccountList';
+import SideBar from '../components/layout/SideBar';
+import AccountList from '../components/bank/AccountList';
 
 const Home = () => {
     // Пример данных для счетов

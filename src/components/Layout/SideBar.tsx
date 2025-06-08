@@ -12,6 +12,12 @@ const SideBar = () => {
                 <li className="mb-3">
                     <Link to="/register" className="block hover:bg-blue-700 p-2 rounded">Регистрация</Link>
                 </li>
+                <li className="mb-3">
+                    <Link to="/accounts" className="block hover:bg-blue-700 p-2 rounded">Аккаунты</Link>
+                </li>
+                <li className="mb-3">
+                    <Link to="/transactions" className="block hover:bg-blue-700 p-2 rounded">Транзакции</Link>
+                </li>
             </ul>
         </div>
     );
