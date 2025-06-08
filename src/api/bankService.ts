@@ -13,26 +13,32 @@ type AccountType = 'SAVINGS' | 'CHECKING' | 'CREDIT';
 
 export const bankService = {
   createAccount: (data: { number: number; userId: number; accountType: AccountType }) => 
-    instance.post<AccountDto>('', data),
+    instance.post<AccountDto>('', data)
+      .then(response => { return response; }),
 
   getAccount: (userId: number, accountNumber: number) => 
-    instance.get<AccountDto>(`/${userId}/${accountNumber}`),
+    instance.get<AccountDto>(`/${userId}/${accountNumber}`)
+      .then(response => { return response; }),
 
   getAccounts: (userId: number) => 
-    instance.get<AccountDto[]>(`/${userId}`),
+    instance.get<AccountDto[]>(`/${userId}`)
+      .then(response => { return response; }),
 
   getAccountsByType: (userId: number, accountType: AccountType) => 
-    instance.get<AccountDto[]>(`/${userId}/types/${accountType}`),
+    instance.get<AccountDto[]>(`/${userId}/types/${accountType}`)
+      .then(response => { return response; }),
 
   deposit: (accountNumber: number, amount: number) => 
     instance.post<DepositResponse>(`/${accountNumber}/deposits`, null, { 
       params: { amount } 
-    }),
+    })
+      .then(response => { return response; }),
 
   withdraw: (accountNumber: number, amount: number) => 
     instance.post<WithdrawResponse>(`/${accountNumber}/withdrawals`, null, { 
       params: { amount } 
-    }),
+    })
+      .then(response => { return response; }),
 
   transfer: (sourceAccountNumber: number, targetAccountNumber: number, amount: number) => 
     instance.post<TransferResponse>('/transfer', null, { 
@@ -42,6 +48,7 @@ export const bankService = {
         amount 
       } 
     })
+      .then(response => { return response; }),
 };
 
 interface AccountDto {

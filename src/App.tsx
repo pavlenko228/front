@@ -7,8 +7,21 @@ import Register from './pages/Register';
 import Accounts from './pages/Accounts';
 import Transactions from './pages/Transactions';
 import NavBar from './components/layout/NavBar';
+import { Layout } from './components/layout/Layout';
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1e88e5',
+    },
+    secondary: {
+      main: '#ff4081',
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  },
+});
 
 function App() {
   return (
@@ -16,15 +29,16 @@ function App() {
       <CssBaseline />
       <AuthProvider>
         <BrowserRouter>
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/accounts" element={<Accounts />} />
-            <Route path="/transactions" element={<Transactions />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/accounts" element={<Accounts />} />
+              <Route path="/transactions" element={<Transactions />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Layout>
         </BrowserRouter>
       </AuthProvider>
     </ThemeProvider>

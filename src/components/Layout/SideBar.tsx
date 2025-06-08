@@ -1,26 +1,45 @@
-import React from 'react';
+import { List, ListItem, ListItemButton, ListItemText, Divider, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const SideBar = () => {
-    return (
-        <div className="w-64 bg-blue-800 text-white p-4">
-            <h2 className="text-xl font-bold mb-6">Меню</h2>
-            <ul>
-                <li className="mb-3">
-                    <Link to="/" className="block hover:bg-blue-700 p-2 rounded">Главная</Link>
-                </li>
-                <li className="mb-3">
-                    <Link to="/register" className="block hover:bg-blue-700 p-2 rounded">Регистрация</Link>
-                </li>
-                <li className="mb-3">
-                    <Link to="/accounts" className="block hover:bg-blue-700 p-2 rounded">Аккаунты</Link>
-                </li>
-                <li className="mb-3">
-                    <Link to="/transactions" className="block hover:bg-blue-700 p-2 rounded">Транзакции</Link>
-                </li>
-            </ul>
-        </div>
-    );
+const menuItems = [
+  { text: 'Главная', path: '/' },
+  { text: 'Регистрация', path: '/register' },
+  { text: 'Вход', path: '/login' },
+  { text: 'Обновить токен', path: '/refreshToken' },
+  { text: 'Аккаунты', path: '/accounts' },
+  { text: 'Транзакции', path: '/transactions' },
+];
+
+export const SideBar = () => {
+  return (
+    <Box
+      sx={{
+        width: 240,
+        bgcolor: 'primary.dark',
+        color: 'white',
+        height: '100vh',
+        position: 'fixed',
+      }}
+    >
+      <List>
+        {menuItems.map((item) => (
+          <ListItem key={item.path} disablePadding>
+            <ListItemButton
+              component={Link}
+              to={item.path}
+              sx={{
+                '&:hover': {
+                  bgcolor: 'primary.light',
+                },
+              }}
+            >
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 };
 
 export default SideBar;

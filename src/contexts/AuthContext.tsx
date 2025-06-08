@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode'; // Добавьте эту зависи�
 interface AuthContextType {
   token: string | null;
   userId: number | null; // Добавлено
-  login: (username: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -46,8 +46,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const login = async (username: string, password: string) => {
-    const response = await authService.login({ username, password });
+  const login = async (email: string, password: string) => {
+    const response = await authService.login({ email, password });
     const parsed = parseToken(response.data.token);
     if (!parsed) throw new Error('Invalid token received');
     

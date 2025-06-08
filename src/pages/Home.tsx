@@ -1,24 +1,39 @@
 import React from 'react';
+import { useState } from 'react';
 import SideBar from '../components/layout/SideBar';
-import AccountList from '../components/bank/AccountList';
+import { authService } from '../api/authService';
+import { Alert, Box, Button, Paper, Typography } from '@mui/material';
+import { AxiosError } from 'axios';
 
 const Home = () => {
-    // Пример данных для счетов
-    const accounts = [
-        { id: '1', balance: 10000, currency: 'RUB', name: 'Основной счёт' },
-        { id: '2', balance: 5000, currency: 'USD', name: 'Долларовый счёт' },
-        { id: '3', balance: 2000, currency: 'EUR', name: 'Евро счёт' },
-    ];
 
-    return (
-        <div className="flex h-screen bg-gray-100">
-            <SideBar />
-            <div className="flex-1 p-6 overflow-auto">
-                <h1 className="text-2xl font-bold mb-6">Главная страница</h1>
-                <AccountList accounts={accounts} />
-            </div>
-        </div>
-    );
+  const [message, setMessage] = useState<{text: string, isError: boolean} | null>(null);
+
+  const handleRefresh = async () => {
+    try {
+      await authService.refreshToken();
+      setMessage({ text: 'Токены успешно обновлены!', isError: false });
+    } catch (error) {
+      // Типизируем ошибку как AxiosError
+      const axiosError = error as AxiosError<{
+        message?: string;
+      }>;
+      
+      setMessage({ 
+        text: axiosError.response?.data?.message || 
+             axiosError.message || 
+             'Ошибка обновления токенов', 
+        isError: true 
+      });
+    }
+  };
+
+  return (
+    <Paper elevation={0} sx={{ p: 4, maxWidth: 900, mx: 'auto', mt: 4 }}>
+
+      
+    </Paper>
+  );
 };
 
 export default Home;

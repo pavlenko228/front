@@ -1,21 +1,13 @@
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import { useAuth } from '../../contexts/AuthContext';
+import { AppBar, Toolbar, Typography } from '@mui/material';
 
-export default function Navbar() {
-  const { token, logout } = useAuth();
-
+export const NavBar = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ bgcolor: 'primary.main' }}>
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Bank Service
-        </Typography>
-        {token && (
-          <Button color="inherit" onClick={logout}>
-            Logout
-          </Button>
-        )}
+
       </Toolbar>
     </AppBar>
   );
-}
+};
+
+export default NavBar;
