@@ -1,39 +1,39 @@
-import React from 'react';
-import { useState } from 'react';
-import SideBar from '../components/layout/SideBar';
-import { authService } from '../api/authService';
-import { Alert, Box, Button, Paper, Typography } from '@mui/material';
-import { AxiosError } from 'axios';
+import { Button, Box, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-const Home = () => {
-
-  const [message, setMessage] = useState<{text: string, isError: boolean} | null>(null);
-
-  const handleRefresh = async () => {
-    try {
-      await authService.refreshToken();
-      setMessage({ text: 'Токены успешно обновлены!', isError: false });
-    } catch (error) {
-      // Типизируем ошибку как AxiosError
-      const axiosError = error as AxiosError<{
-        message?: string;
-      }>;
-      
-      setMessage({ 
-        text: axiosError.response?.data?.message || 
-             axiosError.message || 
-             'Ошибка обновления токенов', 
-        isError: true 
-      });
-    }
-  };
-
+export default function Home() {
   return (
-    <Paper elevation={0} sx={{ p: 4, maxWidth: 900, mx: 'auto', mt: 4 }}>
-
+    <Box sx={{ p: 3, maxWidth: 600, margin: '0 auto' }}>
+      <Typography variant="h4" gutterBottom>Банковское API</Typography>
       
-    </Paper>
+      <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
+        <Button 
+          component={Link} 
+          to="/login" 
+          variant="contained" 
+          size="large"
+        >
+          Вход
+        </Button>
+        
+        <Button 
+          component={Link} 
+          to="/register" 
+          variant="contained" 
+          size="large"
+        >
+          Регистрация
+        </Button>
+        
+        <Button 
+          component={Link} 
+          to="/accounts" 
+          variant="contained" 
+          size="large"
+        >
+          Управление счетами
+        </Button>
+      </Box>
+    </Box>
   );
-};
-
-export default Home;
+}
